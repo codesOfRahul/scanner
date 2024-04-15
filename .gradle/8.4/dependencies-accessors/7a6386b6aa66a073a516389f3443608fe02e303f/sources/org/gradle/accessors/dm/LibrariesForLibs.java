@@ -349,7 +349,7 @@ public class LibrariesForLibs extends AbstractExternalDependencyFactory {
             public Provider<String> getAppcompat() { return getVersion("appcompat"); }
 
             /**
-             * Returns the version associated to this alias: composeBom (2023.08.00)
+             * Returns the version associated to this alias: composeBom (2024.04.00)
              * If the version is a rich version and that its not expressible as a
              * single version string, then an empty string is returned.
              * This version was declared in catalog libs.versions.toml

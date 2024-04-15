@@ -1,11 +1,18 @@
 package com.example.scanner
 
+import android.annotation.SuppressLint
 import android.graphics.ImageFormat
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import com.google.zxing.*
 import com.google.zxing.common.HybridBinarizer
 import java.nio.ByteBuffer
+import java.nio.charset.StandardCharsets
+import java.util.Base64
+import javax.crypto.Cipher
+import javax.crypto.spec.SecretKeySpec
 
 class QrCodeAnalyzer(
     private val onQrCodeScanned: (String) -> Unit
@@ -56,4 +63,16 @@ class QrCodeAnalyzer(
             get(it)
         }
     }
+}
+
+
+@RequiresApi(Build.VERSION_CODES.O)
+fun decryptData(data: String, key: String): String {
+    val fixedKey = key.toByteArray(StandardCharsets.UTF_8).copyOf(16)
+
+    val cipher = Cipher.getInstance("AES/ECB/PKCS5Padding")
+    val secretKey = SecretKeySpec(fixedKey, "AES")
+    cipher.init(Cipher.DECRYPT_MODE, secretKey)
+    val decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(data))
+    return String(decryptedBytes, StandardCharsets.UTF_8)
 }

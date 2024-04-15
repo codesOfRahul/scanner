@@ -34,6 +34,9 @@ class BarcodeAnalyzer(
                     for (barcode in barcodes) {
                         onBarcodeScanned(barcode.rawValue ?: "")
                     }
+                    for (barcode in barcodes){
+                        onBarcodeScanned(barcode.rawValue ?: "")
+                    }
                 }
                 .addOnFailureListener { exception ->
                     exception.printStackTrace()
@@ -45,4 +48,5 @@ class BarcodeAnalyzer(
             image.close()
         }
     }
+
 }
